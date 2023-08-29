@@ -1,0 +1,12 @@
+.input_with_icon {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 40px;
+}
+
+.input_with_icon svg {
+  position: absolute;
+  left: 10px;
+  /* font-size: 24px; */
+}

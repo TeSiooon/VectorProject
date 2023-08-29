@@ -1,0 +1,22 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- AlterTable
+ALTER TABLE [dbo].[User] ADD [description] NVARCHAR(1000) NOT NULL CONSTRAINT [User_description_df] DEFAULT '',
+[facebook] NVARCHAR(1000) NOT NULL CONSTRAINT [User_facebook_df] DEFAULT '',
+[instagram] NVARCHAR(1000) NOT NULL CONSTRAINT [User_instagram_df] DEFAULT '',
+[snapchat] NVARCHAR(1000) NOT NULL CONSTRAINT [User_snapchat_df] DEFAULT '';
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH

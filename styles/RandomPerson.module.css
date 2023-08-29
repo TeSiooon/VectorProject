@@ -1,0 +1,16 @@
+.personAvatar {
+  width: 250px;
+  height: 250px;
+}
+
+.rand {
+  min-height: 94vh;
+}
+
+.gallery {
+  min-height: 45vh;
+}
+.gallery_img {
+  width: 100%;
+  height: 100%;
+}

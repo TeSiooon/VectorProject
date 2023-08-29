@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                     Int             @id @default(autoincrement())
+  firstName              String
+  lastName               String
+  password               String
+  dateOfBirth            String
+  email                  String          @unique
+  age                    Int
+  sex                    String
+  images                 Image[]
+  // social
+  description            String          @default("")
+  instagram              String          @default("")
+  facebook               String          @default("")
+  snapchat               String          @default("")
+  //Friends
+  friends                FriendList[]
+  friendRequestsSent     FriendRequest[] @relation("sentFriendRequests")
+  friendRequestsReceived FriendRequest[] @relation("receivedFriendRequests")
+}
+
+model FriendList {
+  id       Int   @id @default(autoincrement())
+  userId   Int
+  friendId Int
+  user     User? @relation(fields: [friendId], references: [id])
+}
+
+model FriendRequest {
+  id         Int    @id @default(autoincrement())
+  fromUserId Int
+  toUserId   Int
+  status     String @default("oczekujace")
+  fromUser   User   @relation("sentFriendRequests", fields: [fromUserId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  toUser     User   @relation("receivedFriendRequests", fields: [toUserId], references: [id])
+}
+
+model Image {
+  id       Int     @id @default(autoincrement())
+  user     User?   @relation(fields: [userId], references: [id])
+  imgURL   String?
+  userId   Int?
+  isAvatar Boolean @default(false)
+}

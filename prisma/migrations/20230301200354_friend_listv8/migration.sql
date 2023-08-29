@@ -1,0 +1,27 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- CreateTable
+CREATE TABLE [dbo].[FriendList] (
+    [id] INT NOT NULL IDENTITY(1,1),
+    [userId] INT NOT NULL,
+    [friendId] INT NOT NULL,
+    CONSTRAINT [FriendList_pkey] PRIMARY KEY CLUSTERED ([id])
+);
+
+-- AddForeignKey
+ALTER TABLE [dbo].[FriendList] ADD CONSTRAINT [FriendList_friendId_fkey] FOREIGN KEY ([friendId]) REFERENCES [dbo].[User]([id]) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH
